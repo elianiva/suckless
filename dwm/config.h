@@ -12,16 +12,16 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 28;       /* bar height */
-static const char *fonts[]          = { "Iosevka:size=11:style=Regular",
-                                        "Iosevka Nerd Font:size=11:style=regular" }; /* statusbar font */
+static const char *fonts[]          = { "Iosevka:size=11:style=Regular" };
+                                        /* "Iosevka Nerd Font:size=11:style=regular" }; /1* statusbar font *1/ */
 
 /* colours */
-static const char col_bg[]          = "#292d3e";
-static const char col_fg[]          = "#959dcb";
-static const char col_white[]       = "#eaeaea";
-static const char col_normal[]      = "#676e95";
-static const char col_active[]      = "#82aaff";
-static const char *colors[][3]      = {
+static const char col_bg[]         = "#292d3e";
+static const char col_fg[]         = "#959dcb";
+static const char col_white[]      = "#eaeaea";
+static const char col_normal[]     = "#676e95";
+static const char col_active[]     = "#82aaff";
+static const char *colors[][3]     = {
 	/*               fg         bg           border   */
 	[SchemeNorm] = { col_fg,    col_bg,      col_normal },
 	[SchemeSel]  = { col_white, col_bg,      col_active  },
@@ -36,7 +36,6 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "*",        NULL,       NULL,       0,            0,           -1 },
 	{ "music",    NULL,       NULL,       0,            1,           -1 },
 	{ "Steam",    NULL,       NULL,       0,            1,           -1 },
 	{ "mpv",      NULL,       NULL,       0,            0,           -1 },

@@ -1220,6 +1220,7 @@ manage(Window w, XWindowAttributes *wa)
 
 	wc.border_width = c->bw;
 
+  // center floating window
   if (c->x == selmon->wx) c->x += (c->mon->ww - WIDTH(c)) / 2 - c->bw;
   if (c->y == selmon->wy) c->y += (c->mon->wh - HEIGHT(c)) / 2 - c->bw;
 
