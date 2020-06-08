@@ -4,6 +4,7 @@
 - [pertag](https://dwm.suckless.org/patches/pertag/dwm-6.1-pertag_without_bar.diff)
 - [status2d](https://dwm.suckless.org/patches/status2d/dwm-status2d-6.2.diff)
 - [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/dwm-vanitygaps-20190508-6.2.diff)
+- [swallow](https://dwm.suckless.org/patches/swallow/dwm-swallow-20200522-7accbcf.diff)
 - all new spawned floating window placed to center
 - disable border on monocle mode
 
