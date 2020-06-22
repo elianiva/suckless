@@ -29,7 +29,7 @@ static const char *colors[][3]     = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4"};
+static const char *tags[] = { "1", "2", "3", "4", "5", "6"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -40,6 +40,7 @@ static const Rule rules[] = {
 	{ "music",    NULL,       NULL,       0,            1,          0,          0,          -1 },
 	{ "St",       NULL,       NULL,       0,            0,          1,          0           -1 },
 	{ "Steam",    NULL,       NULL,       0,            1,          0,          0,          -1 },
+	{ "Pcmanfm",  NULL,       NULL,       0,            1,          0,          0,          -1 },
 	{ NULL,       NULL,       "Event Tester", 0,        1,          0,          1,          -1 }, /* xev */
 };
 
@@ -107,8 +108,8 @@ static Key keys[] = {
   { MODKEY,                       XK_g,      zoom,           {0} },
   /* { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, */
   /* { MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = -1 } }, */
-  { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-  { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+  { MODKEY,                       XK_h,      setmfact,       {.f = -0.02} },
+  { MODKEY,                       XK_l,      setmfact,       {.f = +0.02} },
   { MODKEY,                       XK_Tab,    view,           {0} },
   { MODKEY,                       XK_q,      killclient,     {0} },
   { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -124,12 +125,13 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
   { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
   { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+  { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
   TAGKEYS(                        XK_1,                      0)
   TAGKEYS(                        XK_2,                      1)
   TAGKEYS(                        XK_3,                      2)
   TAGKEYS(                        XK_4,                      3)
-  /* TAGKEYS(                        XK_5,                      4) */
-  /* TAGKEYS(                        XK_6,                      5) */
+  TAGKEYS(                        XK_5,                      4)
+  TAGKEYS(                        XK_6,                      5)
   /* TAGKEYS(                        XK_7,                      6) */
   /* TAGKEYS(                        XK_8,                      7) */
   /* TAGKEYS(                        XK_9,                      8) */
