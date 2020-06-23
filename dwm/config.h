@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	/* class     instance     title       tags mask     isfloating  isterminal  noswallow   monitor */
 	{ "music",    NULL,       NULL,       0,            1,          0,          0,          -1 },
 	{ "St",       NULL,       NULL,       0,            0,          1,          0           -1 },
+	{ "Alacritty",NULL,       NULL,       0,            0,          1,          0           -1 },
 	{ "Steam",    NULL,       NULL,       0,            1,          0,          0,          -1 },
 	{ "Pcmanfm",  NULL,       NULL,       0,            1,          0,          0,          -1 },
 	{ NULL,       NULL,       "Event Tester", 0,        1,          0,          1,          -1 }, /* xev */
@@ -71,7 +72,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]     = {"launcher", NULL};
 static const char *float_music[]  = {"st", "-c", "music", "-e", "ncmpcpp", NULL};
-static const char *termcmd[]      = {"st", NULL };
+static const char *termcmd[]      = {"alacritty", NULL };
 static const char *dmenuunicode[] = {"dmenuunicode", NULL };
 static const char *clipmenu[]     = {"clipmenu", NULL };
 static const char *powermenu[]    = {"powermenu", NULL };
