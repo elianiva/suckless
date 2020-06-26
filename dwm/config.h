@@ -29,7 +29,7 @@ static const char *colors[][3]     = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6"};
+static const char *tags[] = { "一", "二", "三", "四", "五", "六"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -91,9 +91,9 @@ static const char *bri_up[]       = {"light", "-A", "5", NULL};
 static const char *bri_down[]     = {"light", "-U", "5", NULL};
 
 /* music control */
-static const char *mpd_toggle[]   = {"mpc", "toggle", NULL};
-static const char *mpd_next[]     = {"mpc", "next", NULL};
-static const char *mpd_prev[]     = {"mpc", "prev", NULL};
+static const char *mpd_toggle[]   = {"playerctl", "play-pause", NULL};
+static const char *mpd_next[]     = {"playerctl", "next", NULL};
+static const char *mpd_prev[]     = {"playerctl", "previous", NULL};
 
 static Key keys[] = {
   /* modifier                     key        function        argument */
