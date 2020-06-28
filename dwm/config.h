@@ -13,8 +13,8 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 28;       /* bar height */
-static const char *fonts[]          = { "Iosevka:size=11:style=Regular" };
-                                        /* "Iosevka Nerd Font:size=11:style=regular" }; /1* statusbar font *1/ */
+static const char *fonts[]          = { "Iosevka:size=11:style=Regular"
+                                        "Noto Sans CJK:size=11:style=regular" }; /* statusbar font */
 
 /* colours */
 static const char col_bg[]         = "#292d3e";
