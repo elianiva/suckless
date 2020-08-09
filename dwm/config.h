@@ -2,13 +2,13 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 8;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 8;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 8;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 8;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -17,11 +17,11 @@ static const char *fonts[]          = { "Iosevka:size=11:style=Regular"
                                         "Noto Sans CJK:size=11:style=regular" }; /* statusbar font */
 
 /* colours */
-static const char col_bg[]         = "#292d3e";
-static const char col_fg[]         = "#959dcb";
-static const char col_white[]      = "#eaeaea";
-static const char col_normal[]     = "#676e95";
-static const char col_active[]     = "#82aaff";
+static const char col_bg[]         = "#282828";
+static const char col_fg[]         = "#ebdbb2";
+static const char col_white[]      = "#e79921";
+static const char col_normal[]     = "#3e3e3e";
+static const char col_active[]     = "#ebdbb2";
 static const char *colors[][3]     = {
 	/*               fg         bg           border   */
 	[SchemeNorm] = { col_fg,    col_bg,      col_normal },
@@ -82,9 +82,9 @@ static const char *scr_full[]     = {"flameshot", "full", "-p", "/home/elianiva/
 static const char *scr_select[]   = {"flameshot", "gui", "-p", "/home/elianiva/pix/shots/", NULL };
 
 /* audio control */
-static const char *vol_up[]       = {"pamixer", "-i", "2", NULL};
-static const char *vol_down[]     = {"pamixer", "-d", "2", NULL};
-static const char *vol_toggle[]   = {"pamixer", "-t", NULL};
+/* static const char *vol_up[]       = {"pamixer", "-i", "2", NULL}; */
+/* static const char *vol_down[]     = {"pamixer", "-d", "2", NULL}; */
+/* static const char *vol_toggle[]   = {"pamixer", "-t", NULL}; */
 
 /* brightness control */
 static const char *bri_up[]       = {"light", "-A", "5", NULL};
@@ -138,9 +138,9 @@ static Key keys[] = {
   /* TAGKEYS(                        XK_9,                      8) */
 
   /*audio keys*/
-  { 0,                            XF86XK_AudioMute,		      spawn,		{.v = vol_toggle} },
-  { 0,                            XF86XK_AudioRaiseVolume,	spawn,		{.v = vol_up} },
-  { 0,                            XF86XK_AudioLowerVolume,	spawn,		{.v = vol_down} },
+  { 0,                            XF86XK_AudioMute,		      spawn,		SHCMD("pamixer -t && pkill --signal RTMIN+10 -x dwmbar")},
+  { 0,                            XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 2 && pkill --signal RTMIN+10 -x dwmbar")},
+  { 0,                            XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 2 && pkill --signal RTMIN+10 -x dwmbar")},
 
   /*brightness keys*/
   { 0,                            XF86XK_MonBrightnessUp,	  spawn,		{.v = bri_up } },

@@ -15,7 +15,6 @@
 #include <X11/extensions/Xinerama.h>
 #endif
 #include <X11/Xft/Xft.h>
-#include <X11/Xresource.h>
 
 #include "drw.h"
 #include "util.h"
@@ -554,14 +553,9 @@ run(void)
 	XEvent ev;
 
 	while (!XNextEvent(dpy, &ev)) {
-		if (XFilterEvent(&ev, win))
+		if (XFilterEvent(&ev, None))
 			continue;
 		switch(ev.type) {
-		case DestroyNotify:
-			if (ev.xdestroywindow.window != win)
-				break;
-			cleanup();
-			exit(1);
 		case Expose:
 			if (ev.xexpose.count == 0)
 				drw_map(drw, win, 0, 0, mw, mh);
@@ -602,13 +596,8 @@ setup(void)
 	int a, di, n, area = 0;
 #endif
 	/* init appearance */
-	for (j = 0; j < SchemeLast; j++) {
-		scheme[j] = drw_scm_create(drw, (const char**)colors[j], 2);
-	}
-	for (j = 0; j < SchemeOut; ++j) {
-		for (i = 0; i < 2; ++i)
-			free(colors[j][i]);
-	}
+	for (j = 0; j < SchemeLast; j++)
+		scheme[j] = drw_scm_create(drw, colors[j], 2);
 
 	clip = XInternAtom(dpy, "CLIPBOARD",   False);
 	utf8 = XInternAtom(dpy, "UTF8_STRING", False);
@@ -671,17 +660,15 @@ setup(void)
 	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
 	XSetClassHint(dpy, win, &ch);
 
-
-	/* input methods */
-	if ((xim = XOpenIM(dpy, NULL, NULL, NULL)) == NULL)
-		die("XOpenIM failed: could not open input device");
-
+	/* open input methods */
+	xim = XOpenIM(dpy, NULL, NULL, NULL);
 	xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
 	                XNClientWindow, win, XNFocusWindow, win, NULL);
 
 	XMapRaised(dpy, win);
+	XSetInputFocus(dpy, win, RevertToParent, CurrentTime);
 	if (embed) {
-		XSelectInput(dpy, parentwin, FocusChangeMask | SubstructureNotifyMask);
+		XSelectInput(dpy, parentwin, FocusChangeMask);
 		if (XQueryTree(dpy, parentwin, &dw, &w, &dws, &du) && dws) {
 			for (i = 0; i < du && dws[i] != win; ++i)
 				XSelectInput(dpy, dws[i], FocusChangeMask);
@@ -700,41 +687,6 @@ usage(void)
 	      "             [-h height]\n"
 	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n", stderr);
 	exit(1);
-}
-
-void
-readxresources(void) {
-	XrmInitialize();
-
-	char* xrm;
-	if ((xrm = XResourceManagerString(drw->dpy))) {
-		char *type;
-		XrmDatabase xdb = XrmGetStringDatabase(xrm);
-		XrmValue xval;
-
-		if (XrmGetResource(xdb, "dmenu.font", "*", &type, &xval))
-			fonts[0] = strdup(xval.addr);
-		else
-			fonts[0] = strdup(fonts[0]);
-		if (XrmGetResource(xdb, "dmenu.background", "*", &type, &xval))
-			colors[SchemeNorm][ColBg] = strdup(xval.addr);
-		else
-			colors[SchemeNorm][ColBg] = strdup(colors[SchemeNorm][ColBg]);
-		if (XrmGetResource(xdb, "dmenu.foreground", "*", &type, &xval))
-			colors[SchemeNorm][ColFg] = strdup(xval.addr);
-		else
-			colors[SchemeNorm][ColFg] = strdup(colors[SchemeNorm][ColFg]);
-		if (XrmGetResource(xdb, "dmenu.selbackground", "*", &type, &xval))
-			colors[SchemeSel][ColBg] = strdup(xval.addr);
-		else
-			colors[SchemeSel][ColBg] = strdup(colors[SchemeSel][ColBg]);
-		if (XrmGetResource(xdb, "dmenu.selforeground", "*", &type, &xval))
-			colors[SchemeSel][ColFg] = strdup(xval.addr);
-		else
-			colors[SchemeSel][ColFg] = strdup(colors[SchemeSel][ColFg]);
-
-		XrmDestroyDatabase(xdb);
-	}
 }
 
 int
@@ -785,6 +737,8 @@ main(int argc, char *argv[])
 
 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
 		fputs("warning: no locale support\n", stderr);
+	if (!XSetLocaleModifiers(""))
+		fputs("warning: no locale modifiers support\n", stderr);
 	if (!(dpy = XOpenDisplay(NULL)))
 		die("cannot open display");
 	screen = DefaultScreen(dpy);
@@ -795,11 +749,8 @@ main(int argc, char *argv[])
 		die("could not get embedding window attributes: 0x%lx",
 		    parentwin);
 	drw = drw_create(dpy, screen, root, wa.width, wa.height);
-	readxresources();
-	if (!drw_fontset_create(drw, (const char**)fonts, LENGTH(fonts)))
+	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
-
-	free(fonts[0]);
 	lrpad = drw->fonts->h;
 
 #ifdef __OpenBSD__
